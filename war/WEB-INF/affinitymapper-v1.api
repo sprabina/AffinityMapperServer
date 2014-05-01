@@ -99,6 +99,27 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
+    "affinitymapper.getNearByUsers" : {
+      "path" : "users/getMatching",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.msse.teamflyte.affinitymapper.AffinityMapperController.getNearByUsers",
+      "request" : {
+        "parameters" : {
+          "userId" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "affinitymapper.getLocation" : {
       "path" : "location/user/{userId}",
       "httpMethod" : "GET",
@@ -191,14 +212,14 @@
           "name" : {
             "type" : "string"
           },
-          "namespace" : {
-            "type" : "string"
-          },
           "parent" : {
             "$ref" : "Key"
           },
           "complete" : {
             "type" : "boolean"
+          },
+          "namespace" : {
+            "type" : "string"
           }
         }
       },
@@ -234,6 +255,42 @@
             }
           }
         }
+      },
+      "MatchingPerson" : {
+        "id" : "MatchingPerson",
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "interestGroups" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "latitude" : {
+            "type" : "number"
+          },
+          "longitude" : {
+            "type" : "number"
+          }
+        }
+      },
+      "MatchingPersonCollection" : {
+        "id" : "MatchingPersonCollection",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "MatchingPerson"
+            }
+          }
+        }
       }
     },
     "methods" : {
@@ -255,6 +312,11 @@
       "com.msse.teamflyte.affinitymapper.AffinityMapperController.listInterestGroups" : {
         "response" : {
           "$ref" : "StringCollection"
+        }
+      },
+      "com.msse.teamflyte.affinitymapper.AffinityMapperController.getNearByUsers" : {
+        "response" : {
+          "$ref" : "MatchingPersonCollection"
         }
       },
       "com.msse.teamflyte.affinitymapper.AffinityMapperController.getLocation" : {

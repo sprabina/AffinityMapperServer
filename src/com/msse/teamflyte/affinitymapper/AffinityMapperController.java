@@ -13,10 +13,16 @@ import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.msse.teamflyte.affinitymapper.models.InterestEnum;
+import com.msse.teamflyte.affinitymapper.models.Location;
+import com.msse.teamflyte.affinitymapper.models.MatchingPerson;
+import com.msse.teamflyte.affinitymapper.models.Person;
+import com.msse.teamflyte.affinitymapper.services.PersonService;
 
 @Api(name = "affinitymapper", version = "v1")
 public class AffinityMapperController {
 
+	PersonService personService;
 	@SuppressWarnings("unchecked")
 	@ApiMethod(name = "getUser", path = "user/{userId}", httpMethod = HttpMethod.GET)
 	public Person getUser(@Named("userId") String userId) {
@@ -48,6 +54,18 @@ public class AffinityMapperController {
 			person.setProximityAlertToggle(requestBody.isProximityAlertToggle());
 			person.setInterestGroups(requestBody.getInterestGroups());			
 			mgr.persist(person);
+		} finally {
+			mgr.close();
+		}
+	}
+	
+	@ApiMethod(name = "getNearByUsers", path = "users/getMatching", httpMethod = HttpMethod.GET)
+	public List<MatchingPerson> getNearByUsers(@Named("userId") String userId) {
+		EntityManager mgr = getEntityManager();
+		personService = new PersonService(mgr);
+		try {
+			//TODO query the location service and then pass the list to the PersonService.
+			return personService.getUsersWithSimilarInterst(null);
 		} finally {
 			mgr.close();
 		}
