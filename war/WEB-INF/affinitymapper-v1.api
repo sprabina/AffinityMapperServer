@@ -100,7 +100,7 @@
       }
     },
     "affinitymapper.getNearByUsers" : {
-      "path" : "users/getMatching",
+      "path" : "users/getNearByUsers",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],

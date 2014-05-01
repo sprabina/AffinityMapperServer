@@ -59,7 +59,7 @@ public class AffinityMapperController {
 		}
 	}
 	
-	@ApiMethod(name = "getNearByUsers", path = "users/getMatching", httpMethod = HttpMethod.GET)
+	@ApiMethod(name = "getNearByUsers", path = "users/getNearByUsers", httpMethod = HttpMethod.GET)
 	public List<MatchingPerson> getNearByUsers(@Named("userId") String userId) {
 		EntityManager mgr = getEntityManager();
 		personService = new PersonService(mgr);
