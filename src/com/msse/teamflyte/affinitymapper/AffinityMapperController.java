@@ -16,6 +16,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.msse.teamflyte.affinitymapper.models.InterestEnum;
 import com.msse.teamflyte.affinitymapper.models.Location;
 import com.msse.teamflyte.affinitymapper.models.MatchingPerson;
+import com.msse.teamflyte.affinitymapper.models.MatchingPersonList;
 import com.msse.teamflyte.affinitymapper.models.Person;
 import com.msse.teamflyte.affinitymapper.services.PersonService;
 
@@ -59,8 +60,8 @@ public class AffinityMapperController {
 		}
 	}
 	
-	@ApiMethod(name = "getNearByUsers", path = "users/getNearByUsers", httpMethod = HttpMethod.GET)
-	public List<MatchingPerson> getNearByUsers(@Named("userId") String userId) {
+	@ApiMethod(name = "getNearByUsers", path = "getNearByUsers/{userId}", httpMethod = HttpMethod.GET)
+	public MatchingPersonList getNearByUsers(@Named("userId") String userId) {
 		EntityManager mgr = getEntityManager();
 		personService = new PersonService(mgr);
 		try {

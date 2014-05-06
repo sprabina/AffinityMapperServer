@@ -100,7 +100,7 @@
       }
     },
     "affinitymapper.getNearByUsers" : {
-      "path" : "users/getNearByUsers",
+      "path" : "getNearByUsers/{userId}",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -215,11 +215,11 @@
           "parent" : {
             "$ref" : "Key"
           },
-          "complete" : {
-            "type" : "boolean"
-          },
           "namespace" : {
             "type" : "string"
+          },
+          "complete" : {
+            "type" : "boolean"
           }
         }
       },
@@ -256,6 +256,18 @@
           }
         }
       },
+      "MatchingPersonList" : {
+        "id" : "MatchingPersonList",
+        "type" : "object",
+        "properties" : {
+          "matchingPersons" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "MatchingPerson"
+            }
+          }
+        }
+      },
       "MatchingPerson" : {
         "id" : "MatchingPerson",
         "type" : "object",
@@ -277,18 +289,6 @@
           },
           "longitude" : {
             "type" : "number"
-          }
-        }
-      },
-      "MatchingPersonCollection" : {
-        "id" : "MatchingPersonCollection",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "MatchingPerson"
-            }
           }
         }
       }
@@ -316,7 +316,7 @@
       },
       "com.msse.teamflyte.affinitymapper.AffinityMapperController.getNearByUsers" : {
         "response" : {
-          "$ref" : "MatchingPersonCollection"
+          "$ref" : "MatchingPersonList"
         }
       },
       "com.msse.teamflyte.affinitymapper.AffinityMapperController.getLocation" : {
