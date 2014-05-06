@@ -22,7 +22,7 @@ public class AffinityMapperCallbackServlet  extends HttpServlet {
 	    GoogleTokenResponse tokenResponse = authFlow.newTokenRequest(req.getParameter("code"))
 	        .setRedirectUri(Utils.getRedirectUri(req)).execute();
 	    // Save the credentials for this user so we can access them from the main servlet.
-	    authFlow.createAndStoreCredential(tokenResponse, "udeeb");
+	    authFlow.createAndStoreCredential(tokenResponse, "prabinashrestha@gmail.com");
 	    resp.sendRedirect(Utils.MAIN_SERVLET_PATH);
 	  }
 	}

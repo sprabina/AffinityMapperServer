@@ -23,7 +23,7 @@ public class AffinityMapperServlet extends HttpServlet {
 			throws IOException {
 
 		GoogleAuthorizationCodeFlow authFlow = Utils.initializeFlow();
-		Credential credential = authFlow.loadCredential("udeeb");
+		Credential credential = authFlow.loadCredential("prabinashrestha@gmail.com");
 		if (credential == null) {
 			// If we don't have a token in store, redirect to authorization
 			// screen.
@@ -48,6 +48,7 @@ public class AffinityMapperServlet extends HttpServlet {
 		respWriter.println("<img src='" + profile.getImage().getUrl() + "'>");
 		respWriter.println("<a href='" + profile.getUrl() + "'>"
 				+ profile.getDisplayName() + "</a>");
+		respWriter.println(profile.getId());		
 	}
 
 }
