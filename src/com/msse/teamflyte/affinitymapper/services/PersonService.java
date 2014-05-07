@@ -32,21 +32,27 @@ public class PersonService {
 		
 		MatchingPerson mPerson1 = new MatchingPerson();
 		mPerson1.setEmail("UdeebTheGreat");
-		mPerson1.setName("Udeeb");		
+		mPerson1.setName("Udeeb");	
+		mPerson1.setUserId("Udeeb");	
+		mPerson1.setImageUrl("Udeeb");		
 		mPerson1.setInterestGroups(listOfInterest);
 		mPerson1.setLatitude(44.97);
 		mPerson1.setLongitude(-93.23);
 		
 		MatchingPerson mPerson2 = new MatchingPerson();
 		mPerson2.setEmail("Udeeeb II");
-		mPerson2.setName("Udeeb II");		
+		mPerson2.setName("Udeeb II");
+		mPerson2.setUserId("Udeeb II");	
+		mPerson2.setImageUrl("Udeeb II");		
 		mPerson2.setInterestGroups(listOfInterest);
 		mPerson2.setLatitude(44.9);
 		mPerson2.setLongitude(-93.3);
 		
 		MatchingPerson mPerson3 = new MatchingPerson();
 		mPerson3.setEmail("Udeeeb III");
-		mPerson3.setName("Udeeb III");		
+		mPerson3.setName("Udeeb III");	
+		mPerson3.setUserId("Udeeb III");	
+		mPerson3.setImageUrl("Udeeb III");	
 		mPerson3.setInterestGroups(listOfInterest);
 		mPerson3.setLatitude(44.8);
 		mPerson3.setLongitude(-93.2);
@@ -62,7 +68,7 @@ public class PersonService {
 		List<String> userIds = new ArrayList<String>();
 
 		for (Location eachLocation : nearByLocationsOfUsers) {
-			userIds.add(eachLocation.getEmail());
+			userIds.add(eachLocation.getUserId());
 		}
 
 		return userIds;

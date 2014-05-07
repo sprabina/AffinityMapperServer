@@ -29,9 +29,9 @@ public class AffinityMapperController {
 	public Person getUser(@Named("userId") String userId) {
 		EntityManager mgr = getEntityManager();
 		try {
-			String queryStr = "select from Person as Person where email = :email ";
+			String queryStr = "select from Person as Person where userId = :value ";
 			Query query = mgr.createQuery(queryStr);
-			query.setParameter("email", userId);
+			query.setParameter("value", userId);
 			if (query.getResultList().size() > 0) {
 				return ((List<Person>) query.getResultList()).get(0);
 			}
@@ -48,8 +48,18 @@ public class AffinityMapperController {
 		EntityManager mgr = getEntityManager();
 		try {
 			Person person = new Person();
-			person.setEmail(requestBody.getEmail());
-			person.setName(requestBody.getName());
+			if(requestBody.getUserId()!=null){
+				person.setUserId(requestBody.getUserId());
+			}
+			if(requestBody.getEmail()!=null){
+				person.setEmail(requestBody.getEmail());
+			}
+			if(requestBody.getImageUrl()!=null){
+				person.setImageUrl(requestBody.getImageUrl());
+			}
+			if(requestBody.getName()!=null){
+				person.setName(requestBody.getName());
+			}
 			person.setChatRequestToggle(requestBody.isChatRequestToggle());
 			person.setProximityAlertLimit(requestBody.getProximityAlertLimit());
 			person.setProximityAlertToggle(requestBody.isProximityAlertToggle());
@@ -77,13 +87,21 @@ public class AffinityMapperController {
 		
 		EntityManager mgr = getEntityManager();
 		try {
-			String queryStr = "select from Person as Person where email = :email ";
+			String queryStr = "select from Person as Person where userId = :value ";
 			Query query = mgr.createQuery(queryStr);
-			query.setParameter("email", userId);
+			query.setParameter("value", userId);
 
 			if (query.getResultList().size() > 0) {
 				Person person = (Person) query.getResultList().get(0);
-				person.setName(requestBody.getName());
+				if(requestBody.getEmail()!=null){
+					person.setEmail(requestBody.getEmail());
+				}
+				if(requestBody.getImageUrl()!=null){
+					person.setImageUrl(requestBody.getImageUrl());
+				}
+				if(requestBody.getName()!=null){
+					person.setName(requestBody.getName());
+				}
 				person.setChatRequestToggle(requestBody.isChatRequestToggle());
 				person.setProximityAlertLimit(requestBody.getProximityAlertLimit());
 				person.setProximityAlertToggle(requestBody.isProximityAlertToggle());
@@ -96,20 +114,20 @@ public class AffinityMapperController {
 		}
 	}
 	
-	@ApiMethod(name = "updateLocation", path = "location/user/{userId}", httpMethod = HttpMethod.POST)
-	public void updateLocation(@Named("userId") String userId, Location requestBody) {
+	@ApiMethod(name = "updateLocation", path = "location/user/{uniqueId}", httpMethod = HttpMethod.POST)
+	public void updateLocation(@Named("uniqueId") String uniqueId, Location requestBody) {
 		EntityManager mgr = getEntityManager();
 		try {
-			String queryStr = "select from Person as Person where email = :email ";
+			String queryStr = "select from Person as Person where userId = :value ";
 			Query query = mgr.createQuery(queryStr);
-			query.setParameter("email", userId);
+			query.setParameter("value", uniqueId);
 
 			if (query.getResultList().size() > 0) {
 				Person person = (Person) query.getResultList().get(0);
 				
-				String locationQueryStr = "select from Location as Location where email = :email ";
+				String locationQueryStr = "select from Location as Location where userId = :value ";
 				Query locationQuery = mgr.createQuery(locationQueryStr);
-				locationQuery.setParameter("email", userId);
+				locationQuery.setParameter("value", uniqueId);
 				
 				Location location = null;
 				if (locationQuery.getResultList().size() > 0){
@@ -120,7 +138,7 @@ public class AffinityMapperController {
 					Key key = KeyFactory.createKey(person.getId(), Location.class.getSimpleName(), uuid);
 					location = new Location();
 					location.setId(key);
-					location.setEmail(userId);
+					location.setUserId(uniqueId);
 				}
 				location.setActive(true);
 				location.setLatitude(requestBody.getLatitude());
@@ -137,14 +155,14 @@ public class AffinityMapperController {
 	public Location getLocation(@Named("userId") String userId) {
 		EntityManager mgr = getEntityManager();
 		try {
-			String queryStr = "select from Person as Person where email = :email ";
+			String queryStr = "select from Person as Person where userId = :value ";
 			Query query = mgr.createQuery(queryStr);
-			query.setParameter("email", userId);
+			query.setParameter("value", userId);
 
 			if (query.getResultList().size() > 0) {
-				String locationQueryStr = "select from Location as Location where email = :email ";
+				String locationQueryStr = "select from Location as Location where uniqueId = :value ";
 				Query locationQuery = mgr.createQuery(locationQueryStr);
-				locationQuery.setParameter("email", userId);
+				locationQuery.setParameter("value", userId);
 				
 				if (locationQuery.getResultList().size() > 0){
 					return ((Location) locationQuery.getResultList().get(0));

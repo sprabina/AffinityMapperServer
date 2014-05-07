@@ -41,7 +41,7 @@
       }
     },
     "affinitymapper.updateLocation" : {
-      "path" : "location/user/{userId}",
+      "path" : "location/user/{uniqueId}",
       "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -50,7 +50,7 @@
       "rosyMethod" : "com.msse.teamflyte.affinitymapper.AffinityMapperController.updateLocation",
       "request" : {
         "parameters" : {
-          "userId" : {
+          "uniqueId" : {
             "type" : "string",
             "required" : true
           }
@@ -172,6 +172,12 @@
           "id" : {
             "$ref" : "Key"
           },
+          "userId" : {
+            "type" : "string"
+          },
+          "imageUrl" : {
+            "type" : "string"
+          },
           "name" : {
             "type" : "string"
           },
@@ -212,14 +218,14 @@
           "name" : {
             "type" : "string"
           },
+          "complete" : {
+            "type" : "boolean"
+          },
           "parent" : {
             "$ref" : "Key"
           },
           "namespace" : {
             "type" : "string"
-          },
-          "complete" : {
-            "type" : "boolean"
           }
         }
       },
@@ -230,7 +236,7 @@
           "id" : {
             "$ref" : "Key"
           },
-          "email" : {
+          "userId" : {
             "type" : "string"
           },
           "active" : {
@@ -276,6 +282,12 @@
             "type" : "string"
           },
           "email" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "string"
+          },
+          "imageUrl" : {
             "type" : "string"
           },
           "interestGroups" : {

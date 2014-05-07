@@ -13,6 +13,8 @@ public class MatchingPerson {
 	
 	private String name;
 	private String email;
+	private String userId;
+	private String imageUrl;
 	private List<String> interestGroups;
 	private Double latitude;
 	private Double longitude;
@@ -53,5 +55,19 @@ public class MatchingPerson {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
+	public String getUserId() {
+		return userId;
+	}
 
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 }

@@ -10,7 +10,7 @@ public class Location {
 
 	@Id
 	private Key id;
-	private String email;
+	private String userId;
 	private boolean active;
 	private Double latitude;
 	private Double longitude;
@@ -39,10 +39,10 @@ public class Location {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	public String getEmail() {
-		return email;
+	public String getUserId() {
+		return userId;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 }

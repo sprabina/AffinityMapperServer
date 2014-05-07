@@ -14,6 +14,8 @@ public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key id;
+	private String userId;
+	private String imageUrl;
 	private String name;
 	private String email;
 	private boolean chatRequestToggle;
@@ -35,6 +37,20 @@ public class Person {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	public String getEmail() {
