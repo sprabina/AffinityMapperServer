@@ -24,22 +24,6 @@
     "maxAge" : 0
   },
   "methods" : {
-    "affinitymapper.addUser" : {
-      "path" : "user/add",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.msse.teamflyte.affinitymapper.AffinityMapperController.addUser",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "empty"
-      }
-    },
     "affinitymapper.updateLocation" : {
       "path" : "location/user/{uniqueId}",
       "httpMethod" : "POST",
@@ -62,9 +46,25 @@
         "body" : "empty"
       }
     },
+    "affinitymapper.addUser" : {
+      "path" : "user/add",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.msse.teamflyte.affinitymapper.AffinityMapperController.addUser",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
     "affinitymapper.updateUser" : {
-      "path" : "user/{userId}",
-      "httpMethod" : "PUT",
+      "path" : "user/update/{userId}",
+      "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
@@ -165,6 +165,55 @@
   },
   "descriptor" : {
     "schemas" : {
+      "Location" : {
+        "id" : "Location",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "Key"
+          },
+          "userId" : {
+            "type" : "string"
+          },
+          "active" : {
+            "type" : "boolean"
+          },
+          "latitude" : {
+            "type" : "number"
+          },
+          "longitude" : {
+            "type" : "number"
+          }
+        }
+      },
+      "Key" : {
+        "id" : "Key",
+        "type" : "object",
+        "properties" : {
+          "kind" : {
+            "type" : "string"
+          },
+          "appId" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "parent" : {
+            "$ref" : "Key"
+          },
+          "complete" : {
+            "type" : "boolean"
+          },
+          "namespace" : {
+            "type" : "string"
+          }
+        }
+      },
       "Person" : {
         "id" : "Person",
         "type" : "object",
@@ -198,55 +247,6 @@
             "items" : {
               "type" : "string"
             }
-          }
-        }
-      },
-      "Key" : {
-        "id" : "Key",
-        "type" : "object",
-        "properties" : {
-          "kind" : {
-            "type" : "string"
-          },
-          "appId" : {
-            "type" : "string"
-          },
-          "id" : {
-            "type" : "string",
-            "format" : "int64"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "complete" : {
-            "type" : "boolean"
-          },
-          "parent" : {
-            "$ref" : "Key"
-          },
-          "namespace" : {
-            "type" : "string"
-          }
-        }
-      },
-      "Location" : {
-        "id" : "Location",
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "$ref" : "Key"
-          },
-          "userId" : {
-            "type" : "string"
-          },
-          "active" : {
-            "type" : "boolean"
-          },
-          "latitude" : {
-            "type" : "number"
-          },
-          "longitude" : {
-            "type" : "number"
           }
         }
       },
@@ -306,14 +306,14 @@
       }
     },
     "methods" : {
-      "com.msse.teamflyte.affinitymapper.AffinityMapperController.addUser" : {
-        "request" : {
-          "$ref" : "Person"
-        }
-      },
       "com.msse.teamflyte.affinitymapper.AffinityMapperController.updateLocation" : {
         "request" : {
           "$ref" : "Location"
+        }
+      },
+      "com.msse.teamflyte.affinitymapper.AffinityMapperController.addUser" : {
+        "request" : {
+          "$ref" : "Person"
         }
       },
       "com.msse.teamflyte.affinitymapper.AffinityMapperController.updateUser" : {

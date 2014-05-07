@@ -82,7 +82,7 @@ public class AffinityMapperController {
 		}
 	}
 	
-	@ApiMethod(name = "UpdateUser", path = "user/{userId}", httpMethod = HttpMethod.PUT)
+	@ApiMethod(name = "UpdateUser", path = "user/update/{userId}", httpMethod = HttpMethod.POST)
 	public void updateUser(@Named("userId") String userId, Person requestBody) {
 		
 		EntityManager mgr = getEntityManager();
