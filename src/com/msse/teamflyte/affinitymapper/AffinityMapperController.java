@@ -202,7 +202,7 @@ public class AffinityMapperController {
 			query.setParameter("value", userId);
 
 			if (query.getResultList().size() > 0) {
-				String locationQueryStr = "select from Location as Location where uniqueId = :value ";
+				String locationQueryStr = "select from Location as Location where userId = :value ";
 				Query locationQuery = mgr.createQuery(locationQueryStr);
 				locationQuery.setParameter("value", userId);
 
