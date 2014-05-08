@@ -182,7 +182,6 @@ public class AffinityMapperController {
 				location.setLatitude(requestBody.getLatitude());
 				location.setLongitude(requestBody.getLongitude());
 				mgr.persist(location);
-				mgr.refresh(location);
 
 				return location;
 			}
