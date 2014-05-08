@@ -59,7 +59,7 @@
         "bodyName" : "resource"
       },
       "response" : {
-        "body" : "empty"
+        "body" : "autoTemplate(backendResponse)"
       }
     },
     "affinitymapper.updateUser" : {
@@ -225,11 +225,11 @@
           "parent" : {
             "$ref" : "Key"
           },
-          "complete" : {
-            "type" : "boolean"
-          },
           "namespace" : {
             "type" : "string"
+          },
+          "complete" : {
+            "type" : "boolean"
           }
         }
       },
@@ -317,6 +317,9 @@
       },
       "com.msse.teamflyte.affinitymapper.AffinityMapperController.updateLocation" : {
         "request" : {
+          "$ref" : "Location"
+        },
+        "response" : {
           "$ref" : "Location"
         }
       },

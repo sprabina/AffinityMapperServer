@@ -82,7 +82,7 @@ public class LocationService {
 
 	public static HashMap<String, Double> getRoughApproximateCoordinate(Location originLocation, int range) {
 		Double rangeInKm = range == 0 ? 10 * mileToKmConversionFactor : range * mileToKmConversionFactor;
-		Double approxCoordinateOffsetPerUnitOfRange = rangeInKm * coordinateOffsetPerKm * bufferForCoordinate;
+		Double approxCoordinateOffsetPerUnitOfRange = rangeInKm * coordinateOffsetPerKm * bufferForCoordinate + 10;
 
 		System.out.println("LocationService approxCoordinateOffsetPerUnitOfRange => " + approxCoordinateOffsetPerUnitOfRange);
 

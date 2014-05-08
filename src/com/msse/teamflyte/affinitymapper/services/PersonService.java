@@ -36,34 +36,41 @@ public class PersonService {
 		return null;
 	}
 
-	public MatchingPersonList getUsersWithSimilarInterst(Person currentUser, List<Location> nearByLocationsOfUsers,
-			String interest) {
+	public MatchingPersonList getUsersWithSimilarInterst(Person currentUser,
+			List<Location> nearByLocationsOfUsers, String interest) {
 		// List<String> nearByUserIds =
 		// getUserIdFromLocations(nearByLocationsOfUsers);
 
 		HashMap<String, Location> userLocationHashMap = getUserHashMapWithLocation(nearByLocationsOfUsers);
-		System.out.println("PersonService userLocationHashMap => " + userLocationHashMap.size());
+		System.out.println("PersonService userLocationHashMap => "
+				+ userLocationHashMap.size());
 
-		List<Person> nearByPersonWithAnyInterest = getUsersByIds(userLocationHashMap.keySet());
-		System.out.println("PersonService nearByPersonWithAnyInterest => " + nearByPersonWithAnyInterest.size());
+		List<Person> nearByPersonWithAnyInterest = getUsersByIdsIndividually(userLocationHashMap
+				.keySet());
+		System.out.println("PersonService nearByPersonWithAnyInterest => "
+				+ nearByPersonWithAnyInterest.size());
 
 		List<MatchingPerson> matchingPersons = new ArrayList<MatchingPerson>();
 
 		for (Person potentialNearByUser : nearByPersonWithAnyInterest) {
 			System.out.println("PersonService potentialNearByUser => "
-					+ Arrays.toString(potentialNearByUser.getInterestGroups().toArray()));
+					+ Arrays.toString(potentialNearByUser.getInterestGroups()
+							.toArray()));
 
 			if (potentialNearByUser.getInterestGroups().contains(interest)) {
-				System.out.println("PersonService Common interest is => " + interest);
+				System.out.println("PersonService Common interest is => "
+						+ interest);
 
 				MatchingPerson candidatePerson = new MatchingPerson();
 				candidatePerson.setEmail(potentialNearByUser.getEmail());
 				candidatePerson.setImageUrl(potentialNearByUser.getImageUrl());
-				candidatePerson.setInterestGroups(potentialNearByUser.getInterestGroups());
+				candidatePerson.setInterestGroups(potentialNearByUser
+						.getInterestGroups());
 				candidatePerson.setName(potentialNearByUser.getName());
 				candidatePerson.setUserId(potentialNearByUser.getUserId());
 
-				Location userLocation = userLocationHashMap.get(potentialNearByUser.getUserId());
+				Location userLocation = userLocationHashMap
+						.get(potentialNearByUser.getUserId());
 				candidatePerson.setLatitude(userLocation.getLatitude());
 				candidatePerson.setLongitude(userLocation.getLongitude());
 
@@ -72,32 +79,47 @@ public class PersonService {
 
 		}
 
-		if (matchingPersons.size() > 0 && matchingPersons.size() < 5) {
-			addDummyUserData(matchingPersons);
-		}
+//		if (matchingPersons.size() > 0 && matchingPersons.size() < 5) {
+//			addDummyUserData(matchingPersons);
+//		}
 
-		MatchingPersonList finalPersonList = new MatchingPersonList(matchingPersons);
+		MatchingPersonList finalPersonList = new MatchingPersonList(
+				matchingPersons);
 		return finalPersonList;
 	}
 
+	public List<Person> getUsersByIdsIndividually(Set<String> set) {
+		List<Person> listPersons = new ArrayList<Person>();
+		
+		for(String userId : set){
+			Person singlePerson = this.getUser(userId);
+			listPersons.add(singlePerson);
+		}
+				
+		return listPersons; 
+	}
 	public List<Person> getUsersByIds(Set<String> set) {
-		System.out.println("PersonService getUsersByIds => " + Arrays.toString(set.toArray()));
+		System.out.println("PersonService getUsersByIds => "
+				+ Arrays.toString(set.toArray()));
 
 		StringBuilder strBuilder = new StringBuilder();
 		for (String userId : set) {
 			strBuilder.append("\'" + userId + "\',");
 		}
-		String finalValueForQuery = strBuilder.substring(0, strBuilder.length() - 1);
-		System.out.println("PersonService getUsersByIds string buider => " + finalValueForQuery);
+		String finalValueForQuery = strBuilder.substring(0,
+				strBuilder.length() - 1);
+		System.out.println("PersonService getUsersByIds string buider => "
+				+ finalValueForQuery);
 
-		String queryStr = "select from Person as Person where userId in ( :value )";
+		String queryStr = "select from Person as Person where userId IN ( :value )";
 		Query query = entityManager.createQuery(queryStr);
 		query.setParameter("value", finalValueForQuery);
 
 		return ((List<Person>) query.getResultList());
 	}
 
-	public HashMap<String, Location> getUserHashMapWithLocation(List<Location> nearByLocationsOfUsers) {
+	public HashMap<String, Location> getUserHashMapWithLocation(
+			List<Location> nearByLocationsOfUsers) {
 		HashMap<String, Location> userLocationHashMap = new HashMap<String, Location>();
 		for (Location eachLocation : nearByLocationsOfUsers) {
 			userLocationHashMap.put(eachLocation.getUserId(), eachLocation);
@@ -105,7 +127,8 @@ public class PersonService {
 		return userLocationHashMap;
 	}
 
-	public List<String> getUserIdFromLocations(List<Location> nearByLocationsOfUsers) {
+	public List<String> getUserIdFromLocations(
+			List<Location> nearByLocationsOfUsers) {
 		List<String> userIds = new ArrayList<String>();
 
 		for (Location eachLocation : nearByLocationsOfUsers) {
@@ -116,6 +139,16 @@ public class PersonService {
 	}
 
 	public void addDummyUserData(List<MatchingPerson> matchingPersonList) {
+		Location loc = new Location();
+		loc.setUserId(matchingPersonList.get(0).getUserId());
+		loc.setLatitude(matchingPersonList.get(0).getLatitude());
+		loc.setLongitude(matchingPersonList.get(0).getLongitude());
+		this.addDummyUserData(matchingPersonList, loc);
+	}
+
+	public void addDummyUserData(List<MatchingPerson> matchingPersonList,
+			Location sampleLocation) {
+
 		List<String> listOfInterest = new ArrayList<String>();
 		listOfInterest.add("Books");
 		listOfInterest.add("Games");
@@ -126,8 +159,8 @@ public class PersonService {
 		mPerson1.setUserId("DoNotClick-Dummy I");
 		mPerson1.setImageUrl("DoNotClick-Dummy I");
 		mPerson1.setInterestGroups(listOfInterest);
-		mPerson1.setLatitude(matchingPersonList.get(0).getLatitude() + .00001);
-		mPerson1.setLongitude(matchingPersonList.get(0).getLongitude() + .00001);
+		mPerson1.setLatitude(sampleLocation.getLatitude() + .00001);
+		mPerson1.setLongitude(sampleLocation.getLongitude() + .00001);
 
 		MatchingPerson mPerson2 = new MatchingPerson();
 		mPerson2.setEmail("DoNotClick-Dummy II");
@@ -135,8 +168,8 @@ public class PersonService {
 		mPerson2.setUserId("DoNotClick-Dummy II");
 		mPerson2.setImageUrl("DoNotClick-Dummy II");
 		mPerson2.setInterestGroups(listOfInterest);
-		mPerson2.setLatitude(matchingPersonList.get(0).getLatitude() + .00002);
-		mPerson2.setLongitude(matchingPersonList.get(0).getLongitude() + .00002);
+		mPerson2.setLatitude(sampleLocation.getLatitude() + .00002);
+		mPerson2.setLongitude(sampleLocation.getLongitude() + .00002);
 
 		MatchingPerson mPerson3 = new MatchingPerson();
 		mPerson3.setEmail("DoNotClick-Dummy III");
@@ -144,8 +177,8 @@ public class PersonService {
 		mPerson3.setUserId("DoNotClick-Dummy III");
 		mPerson3.setImageUrl("DoNotClick-Dummy III");
 		mPerson3.setInterestGroups(listOfInterest);
-		mPerson3.setLatitude(matchingPersonList.get(0).getLatitude() + .00003);
-		mPerson3.setLongitude(matchingPersonList.get(0).getLongitude() + .00003);
+		mPerson3.setLatitude(sampleLocation.getLatitude() + .00003);
+		mPerson3.setLongitude(sampleLocation.getLongitude() + .00003);
 
 		matchingPersonList.add(mPerson1);
 		matchingPersonList.add(mPerson2);

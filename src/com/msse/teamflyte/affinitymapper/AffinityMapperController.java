@@ -75,7 +75,8 @@ public class AffinityMapperController {
 	}
 
 	@ApiMethod(name = "getNearByUsers", path = "getNearByUsers/{userId}/{interest}", httpMethod = HttpMethod.GET)
-	public MatchingPersonList getNearByUsers(@Named("userId") String userId, @Named("interest") String interest) {
+	public MatchingPersonList getNearByUsers(@Named("userId") String userId,
+			@Named("interest") String interest) {
 		EntityManager mgr = getEntityManager();
 		personService = new PersonService(mgr);
 		locationService = new LocationService(mgr);
@@ -83,12 +84,31 @@ public class AffinityMapperController {
 			// TODO query the location service and then pass the list to the
 			// PersonService.
 			Person currentUser = personService.getUser(userId);
-			Location currentUserLocation = locationService.getLocationOfAUser(userId);
-			List<Location> nearByLocationsOfUsers = locationService.getNearByLocation(currentUserLocation,
-					currentUser.getProximityAlertLimit());
-			System.out.println("Controller nearByLocationsOfUsers => " + nearByLocationsOfUsers.size());
-			
-			return personService.getUsersWithSimilarInterst(currentUser, nearByLocationsOfUsers, interest);
+			Location currentUserLocation = locationService
+					.getLocationOfAUser(userId);
+			List<Location> nearByLocationsOfUsers = locationService
+					.getNearByLocation(currentUserLocation,
+							currentUser.getProximityAlertLimit());
+			System.out.println("Controller nearByLocationsOfUsers => "
+					+ nearByLocationsOfUsers.size());
+
+			MatchingPersonList mpList = personService
+					.getUsersWithSimilarInterst(currentUser,
+							nearByLocationsOfUsers, interest);
+
+			personService.addDummyUserData(mpList.getMatchingPersons(),
+					currentUserLocation);
+
+			return mpList;
+			// List<MatchingPerson> matchingPersonList = new
+			// ArrayList<MatchingPerson>();
+			// personService.addDummyUserData(matchingPersonList,
+			// currentUserLocation);
+			// MatchingPersonList mpList = new
+			// MatchingPersonList(matchingPersonList);
+			//
+			// return mpList;
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -118,8 +138,10 @@ public class AffinityMapperController {
 					person.setName(requestBody.getName());
 				}
 				person.setChatRequestToggle(requestBody.isChatRequestToggle());
-				person.setProximityAlertLimit(requestBody.getProximityAlertLimit());
-				person.setProximityAlertToggle(requestBody.isProximityAlertToggle());
+				person.setProximityAlertLimit(requestBody
+						.getProximityAlertLimit());
+				person.setProximityAlertToggle(requestBody
+						.isProximityAlertToggle());
 				person.setInterestGroups(requestBody.getInterestGroups());
 				mgr.persist(person);
 			}
@@ -130,7 +152,8 @@ public class AffinityMapperController {
 	}
 
 	@ApiMethod(name = "updateLocation", path = "location/user/{uniqueId}", httpMethod = HttpMethod.POST)
-	public void updateLocation(@Named("uniqueId") String uniqueId, Location requestBody) {
+	public Location updateLocation(@Named("uniqueId") String uniqueId,
+			Location requestBody) {
 		EntityManager mgr = getEntityManager();
 		try {
 			String queryStr = "select from Person as Person where userId = :value ";
@@ -149,7 +172,8 @@ public class AffinityMapperController {
 					location = (Location) locationQuery.getResultList().get(0);
 				} else {
 					String uuid = UUID.randomUUID().toString();
-					Key key = KeyFactory.createKey(person.getId(), Location.class.getSimpleName(), uuid);
+					Key key = KeyFactory.createKey(person.getId(),
+							Location.class.getSimpleName(), uuid);
 					location = new Location();
 					location.setId(key);
 					location.setUserId(uniqueId);
@@ -158,11 +182,15 @@ public class AffinityMapperController {
 				location.setLatitude(requestBody.getLatitude());
 				location.setLongitude(requestBody.getLongitude());
 				mgr.persist(location);
+				mgr.refresh(location);
+
+				return location;
 			}
 
 		} finally {
 			mgr.close();
 		}
+		return null;
 	}
 
 	@ApiMethod(name = "getLocation", path = "location/user/{userId}", httpMethod = HttpMethod.GET)
