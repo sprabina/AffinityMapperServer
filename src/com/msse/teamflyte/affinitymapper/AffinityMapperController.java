@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import sun.util.logging.resources.logging;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
@@ -91,6 +94,10 @@ public class AffinityMapperController {
 							currentUser.getProximityAlertLimit());
 			System.out.println("Controller nearByLocationsOfUsers => "
 					+ nearByLocationsOfUsers.size());
+			
+//			Logger log = Logger.getLogger("App");
+//			log.info("Controller nearByLocationsOfUsers => "
+//					+ nearByLocationsOfUsers.size());
 
 			MatchingPersonList mpList = personService
 					.getUsersWithSimilarInterst(currentUser,

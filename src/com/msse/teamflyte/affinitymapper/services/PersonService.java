@@ -159,8 +159,8 @@ public class PersonService {
 		mPerson1.setUserId("DoNotClick-Dummy I");
 		mPerson1.setImageUrl("DoNotClick-Dummy I");
 		mPerson1.setInterestGroups(listOfInterest);
-		mPerson1.setLatitude(sampleLocation.getLatitude() + .00001);
-		mPerson1.setLongitude(sampleLocation.getLongitude() + .00001);
+		mPerson1.setLatitude(sampleLocation.getLatitude() + .0001);
+		mPerson1.setLongitude(sampleLocation.getLongitude() + .0001);
 
 		MatchingPerson mPerson2 = new MatchingPerson();
 		mPerson2.setEmail("DoNotClick-Dummy II");
@@ -168,8 +168,8 @@ public class PersonService {
 		mPerson2.setUserId("DoNotClick-Dummy II");
 		mPerson2.setImageUrl("DoNotClick-Dummy II");
 		mPerson2.setInterestGroups(listOfInterest);
-		mPerson2.setLatitude(sampleLocation.getLatitude() + .00002);
-		mPerson2.setLongitude(sampleLocation.getLongitude() + .00002);
+		mPerson2.setLatitude(sampleLocation.getLatitude() + .0002);
+		mPerson2.setLongitude(sampleLocation.getLongitude() + .0002);
 
 		MatchingPerson mPerson3 = new MatchingPerson();
 		mPerson3.setEmail("DoNotClick-Dummy III");
@@ -177,8 +177,8 @@ public class PersonService {
 		mPerson3.setUserId("DoNotClick-Dummy III");
 		mPerson3.setImageUrl("DoNotClick-Dummy III");
 		mPerson3.setInterestGroups(listOfInterest);
-		mPerson3.setLatitude(sampleLocation.getLatitude() + .00003);
-		mPerson3.setLongitude(sampleLocation.getLongitude() + .00003);
+		mPerson3.setLatitude(sampleLocation.getLatitude() + .0003);
+		mPerson3.setLongitude(sampleLocation.getLongitude() + .0003);
 
 		matchingPersonList.add(mPerson1);
 		matchingPersonList.add(mPerson2);
