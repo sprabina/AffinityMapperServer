@@ -103,8 +103,8 @@ public class AffinityMapperController {
 					.getUsersWithSimilarInterst(currentUser,
 							nearByLocationsOfUsers, interest);
 
-			personService.addDummyUserData(mpList.getMatchingPersons(),
-					currentUserLocation);
+//			personService.addDummyUserData(mpList.getMatchingPersons(),
+//					currentUserLocation);
 
 			return mpList;
 			// List<MatchingPerson> matchingPersonList = new
