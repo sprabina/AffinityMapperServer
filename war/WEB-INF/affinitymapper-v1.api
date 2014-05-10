@@ -282,17 +282,29 @@
         "id" : "MatchingPerson",
         "type" : "object",
         "properties" : {
-          "name" : {
-            "type" : "string"
-          },
-          "email" : {
-            "type" : "string"
+          "id" : {
+            "$ref" : "Key"
           },
           "userId" : {
             "type" : "string"
           },
           "imageUrl" : {
             "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "chatRequestToggle" : {
+            "type" : "boolean"
+          },
+          "proximityAlertLimit" : {
+            "type" : "integer"
+          },
+          "proximityAlertToggle" : {
+            "type" : "boolean"
           },
           "interestGroups" : {
             "type" : "array",

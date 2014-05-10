@@ -68,6 +68,9 @@ public class PersonService {
 						.getInterestGroups());
 				candidatePerson.setName(potentialNearByUser.getName());
 				candidatePerson.setUserId(potentialNearByUser.getUserId());
+				candidatePerson.setChatRequestToggle(potentialNearByUser.isChatRequestToggle());
+				candidatePerson.setProximityAlertLimit(potentialNearByUser.getProximityAlertLimit());
+				candidatePerson.setProximityAlertToggle(potentialNearByUser.isProximityAlertToggle());
 
 				Location userLocation = userLocationHashMap
 						.get(potentialNearByUser.getUserId());
